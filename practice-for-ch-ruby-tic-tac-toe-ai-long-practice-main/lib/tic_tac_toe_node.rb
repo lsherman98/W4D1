@@ -9,10 +9,25 @@ class TicTacToeNode
     @prev_move_pos = prev_move_pos
   end
 
-  def losing_node?(evaluator)
+  def losing_node?(evaluator)#
+    if board.over? 
+      return board.won? && board.winner != evaluator   
+    end
+
+    if evaluator == next_mover_mark
+      self.children.all? { |child| child.losing_node?(evaluator)}
+    else
+      self.children.any? { |child| child.losing_node?(evaluator)}
+    end
+      
   end
 
   def winning_node?(evaluator)
+    # if board.over? && board.winner.nil?
+    #   return false
+    # elsif board.over? && board.winner == next_mover_mark
+
+
   end
 
   # This method generates an array of all moves that can be made after
@@ -30,4 +45,6 @@ class TicTacToeNode
     end
     possible_boards
   end
+
+ 
 end
